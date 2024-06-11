@@ -1,3 +1,4 @@
+from django.utils.safestring import mark_safe
 from django.contrib import admin
 from django_summernote.admin import SummernoteModelAdmin
 from .models import Tag, Category, Page, Post
@@ -110,6 +111,7 @@ class PostAdmim(SummernoteModelAdmin):
         'updated_at',
         'created_by',
         'updated_by',
+        'link',
     ]
     prepopulated_fields = {
         'slug': ('title',),
@@ -118,6 +120,17 @@ class PostAdmim(SummernoteModelAdmin):
         'tags',
         'category',
     ]
+
+    def link(self, obj):
+        if not obj.pk:
+            return '-'
+
+        url_do_post = obj.get_absolute_url()
+        safe_link = mark_safe(
+            f'<a target="_blank" href="{url_do_post}">See link</a>'
+        )
+
+        return safe_link
 
     def save_model(self, request, obj, form, change):
         if change:
