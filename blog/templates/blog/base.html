@@ -4,12 +4,18 @@
     {% include "blog/partials/_head.html" %}
 </head>
 <body class="blog-wrapper">
-    {% include "blog/partials/_header.html" %}
-    
+    {% if setup.show_header %}
+        {% include "blog/partials/_header.html" %}
+    {% endif %}
+
     {% block content %}{% endblock content %}
     
-    {% include "blog/partials/_pagination.html" %}
+    {% if setup.show_pagination %}
+        {% include "blog/partials/_pagination.html" %}
+    {% endif %}
     
-    {% include "blog/partials/_footer.html" %}
+    {% if setup.show_footer %}
+        {% include "blog/partials/_footer.html" %}
+    {% endif %}
 </body>
 </html>
